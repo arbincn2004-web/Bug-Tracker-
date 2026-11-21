@@ -1,0 +1,7 @@
+import { NavLink, useNavigate } from 'react-router-dom';
+import { LayoutDashboard, FolderKanban, LogOut, Bug, Plus } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+export default function Layout({ children }) {
+  const { user, logout } = useAuth(); const navigate = useNavigate();
+  return <div className="app-shell"><aside className="sidebar"><div className="brand"><span className="brand-icon"><Bug size={20}/></span> Bug<span className="brand-light">Board</span></div><div className="nav-label">WORKSPACE</div><NavLink to="/" end className={({isActive})=>isActive?'nav-item active':'nav-item'}><LayoutDashboard size={18}/> Dashboard</NavLink><NavLink to="/projects" className={({isActive})=>isActive?'nav-item active':'nav-item'}><FolderKanban size={18}/> Projects</NavLink><div className="sidebar-bottom"><div className="profile"><div className="avatar">{user?.name?.[0]?.toUpperCase() || 'U'}</div><div><strong>{user?.name || 'User'}</strong><small>{user?.email || ''}</small></div></div><button className="nav-item logout" onClick={()=>{logout();navigate('/login')}}><LogOut size={18}/> Log out</button></div></aside><main className="main-area"><header className="topbar"><span className="topbar-caption">Workspace / <b>Overview</b></span><div className="top-user"><div className="avatar small">{user?.name?.[0]?.toUpperCase() || 'U'}</div><span>{user?.name}</span></div></header><section className="page-content">{children}</section></main></div>;
+}

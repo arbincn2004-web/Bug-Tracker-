@@ -1,0 +1,11 @@
+import { Router } from 'express';
+import { protect } from '../middleware/auth.js';
+import { listIssues, createIssue, updateIssue, deleteIssue, addComment } from '../controllers/issueController.js';
+const router = Router();
+router.use(protect);
+router.get('/', listIssues);
+router.post('/', createIssue);
+router.put('/:id', updateIssue);
+router.delete('/:id', deleteIssue);
+router.post('/:id/comments', addComment);
+export default router;
